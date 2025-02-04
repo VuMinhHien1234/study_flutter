@@ -13,19 +13,24 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  Widget? activeScreen;
+  // Widget? activeScreen;
+  // // bien activescreen co the la 1 widget or null vi khi moi chay class thi ve
+  // // mat ki thuat co the class ban dau chua duoc goi toi.
+  // @override
+  // void initState() {// tao object va luu vao bo nho
+  // // neu khong function switchscreen se bi loi vi thuc hien gan nhu cung luc
+  //   activeScreen = StartScreen(switchScreen);
+  //   super.initState();
+  // }
 
-  @override
-  void initState() {
-    activeScreen = StartScreen(switchScreen);
-    super.initState();
-  }
+  var activeScreen = 'start-screen'; // anh xa bien thanh 1 chuoi hoac 1 so =>
+  // de theo doi hon
 
   void switchScreen() {
     setState(() {
       // chay lai function trong class do
       // so sanh cac diem khac neu khac nhau thi se thuc hien lai function
-      activeScreen = const QuestionsScreen();
+      activeScreen = 'questions-screen';
     });
   }
 
@@ -45,7 +50,9 @@ class _QuizState extends State<Quiz> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: activeScreen,
+            child: activeScreen == 'start-screen'
+                ? StartScreen(switchScreen)
+                : const QuestionsScreen(), // goi la bieu thuc 3 ngoi
           )),
     );
   }
