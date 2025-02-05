@@ -1,10 +1,11 @@
 import 'package:adv_basics/questions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adv_basics/start_screen.dart';
+import 'package:adv_basics/data/questions.dart';
+import 'package:adv_basics/results_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
-
   @override
   State<Quiz> createState() {
     // TODO: implement createState
@@ -13,6 +14,17 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> selectedAnswers = [];
+
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = 'result-screen';
+      });
+    }
+  }
+
   // Widget? activeScreen;
   // // bien activescreen co the la 1 widget or null vi khi moi chay class thi ve
   // // mat ki thuat co the class ban dau chua duoc goi toi.
@@ -36,6 +48,18 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(context) {
+    Widget screenWidget = StartScreen(switchScreen);
+    if (activeScreen == 'questions-screen') {
+      screenWidget = QuestionsScreen(
+        onSelectAnswer: chooseAnswer,
+      );
+    }
+    if (activeScreen == 'result-screen') {
+      screenWidget = ResultsScreen(
+        chosenAnswers: selectedAnswers,
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
           backgroundColor: Colors.deepPurple,
@@ -50,9 +74,7 @@ class _QuizState extends State<Quiz> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: activeScreen == 'start-screen'
-                ? StartScreen(switchScreen)
-                : const QuestionsScreen(), // goi la bieu thuc 3 ngoi
+            child: screenWidget, // goi la bieu thuc 3 ngoi
           )),
     );
   }
