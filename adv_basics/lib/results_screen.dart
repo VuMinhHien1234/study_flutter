@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:adv_basics/data/questions.dart';
 import 'package:adv_basics/questions_summary.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key, required this.chosenAnswers});
+  const ResultsScreen({
+    super.key,
+    required this.chosenAnswers,
+    required this.onRestart,
+  });
+  final void Function() onRestart;
   final List<String> chosenAnswers;
   List<Map<String, Object>> getSummaryData() {
     final List<Map<String, Object>> summary = [];
@@ -37,6 +43,12 @@ class ResultsScreen extends StatelessWidget {
           children: [
             Text(
               'You answered $numCorrectQuestion out of $numTotalQuestion correctly!',
+              style: GoogleFonts.lato(
+                color: const Color.fromARGB(255, 230, 200, 253),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 30,
@@ -46,14 +58,23 @@ class ResultsScreen extends StatelessWidget {
               height: 30,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: onRestart,
               child: const Text(
                 'Restart quiz',
               ),
               style: TextButton.styleFrom(
-                foregroundColor: Colors.amber,
+                backgroundColor: const Color.fromARGB(134, 12, 1, 18),
+                foregroundColor: const Color.fromARGB(179, 5, 238, 63),
               ),
             ),
+            TextButton(
+              onPressed: () {},
+              child: const Text('Exit'),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color.fromARGB(134, 12, 1, 18),
+                foregroundColor: Colors.pink,
+              ),
+            )
           ],
         ),
       ),
